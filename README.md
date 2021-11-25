@@ -3,5 +3,18 @@
 ## how to use
 
 - `python -m venv venv`
-- into `frontend` folder, run `yarn` & `yarn build`
-- into `backend`folder, `pip install -r requirements.txt` & `flask run`
+- `.\venv\Scripts\activate.bat`
+
+### frontend development
+
+- `pip install -r requirements.txt`
+- `flask run`
+- `yarn`
+- `yarn dev`
+
+### backend development
+
+- `yarn`
+- `yarn build`
+- `pip install -r requirements.txt`
+- `flask run`
