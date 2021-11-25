@@ -1,7 +1,10 @@
 from flask import Flask, render_template, jsonify
 
+import os
 
-app = Flask(__name__)
+static_path = os.path.abspath('.') + os.path.sep + 'templates' + os.path.sep + 'assets'
+
+app = Flask(__name__, static_folder=static_path)
 
 
 @app.route('/')

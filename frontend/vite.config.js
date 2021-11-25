@@ -6,7 +6,7 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [react()],
-    build: { outDir: '../backend/static' },
+    build: { outDir: '../backend/templates' },
     base: './',
     server: {
       proxy: {
