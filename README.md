@@ -3,7 +3,8 @@
 ## how to use
 
 - `python -m venv venv`
-- `.\venv\Scripts\activate.bat`
+- win:`.\venv\Scripts\activate.bat` or mac:`. venv/bin/activate`
+- `deactivate`
 
 ### frontend development
 
