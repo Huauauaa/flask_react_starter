@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import logo from './logo.svg';
-import './App.css';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -14,12 +13,20 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className="text-center">
+      <header className="App-header bg-gray-800 min-h-screen flex flex-col items-center justify-center text-xl text-white">
+        <img
+          src={logo}
+          className="text-center w-1/4 pointer-events-none animate-logo-spin"
+          alt="logo"
+        />
         <p>Hello Vite + React!</p>
         <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
+          <button
+            type="button"
+            onClick={() => setCount((count) => count + 1)}
+            className="bg-white text-black  py-1 px-1 rounded"
+          >
             count is: {count}
           </button>
         </p>
@@ -28,7 +35,7 @@ function App() {
         </p>
         <p>
           <a
-            className="App-link"
+            className="text-blue-500"
             href="https://reactjs.org"
             target="_blank"
             rel="noopener noreferrer"
