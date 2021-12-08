@@ -1,27 +1,61 @@
-from flask_restful import Resource, abort, fields, marshal_with
-from parses.video_put_args import video_put_args
+from flask_restful import Resource, abort, fields, marshal_with, request
+from parses.video_args import video_put_args, video_patch_args
+
+from models.VideoModel import VideoModel
+from extensions import db
 
 
-videos = [{'id': 0, 'title': 'learn python', 'likes': 234}, {'id': 1, 'title': 'learn js'}]
-
-
-resource_fields = {'title': fields.String, 'likes': fields.Integer}
+resource_fields = {'id': fields.Integer, 'name': fields.String, 'likes': fields.Integer}
 
 
 class Video(Resource):
     def __init__(self):
         print('init')
 
-    def get(self, id):
-        try:
-            return videos[id], 200
-        except:
-            abort(404, message=f'video {id} is not found')
+    @marshal_with(resource_fields)
+    def get(self):
+        q = request.args.get('q') or ''
+        videos = VideoModel.query.filter(VideoModel.name.contains(q)).order_by(-VideoModel.id).all()
+        return videos, 200
 
     @marshal_with(resource_fields)
-    def post(self, id):
-        return videos, 201
-
-    def put(self, id):
+    def post(self):
         args = video_put_args.parse_args()
-        return args
+        video = VideoModel(name=args['name'], likes=args['likes'])
+        db.session.add(video)
+        db.session.commit()
+        return video, 201
+
+
+class VideoId(Resource):
+    @marshal_with(resource_fields)
+    def get(self, id):
+        video = VideoModel.query.get(id)
+        if video:
+            return video, 200
+        else:
+            abort(404, message='not found')
+
+    def delete(self, id):
+        video = VideoModel.query.get(id)
+        if video:
+            db.session.delete(video)
+            db.session.commit()
+            return '', 204
+        else:
+            abort(404, message='not found')
+
+    @marshal_with(resource_fields)
+    def patch(self, id):
+        args = video_patch_args.parse_args()
+        result = VideoModel.query.get(id)
+        if not result:
+            abort(404, message='not found')
+
+        if args['name']:
+            result.name = args['name']
+        if args['likes']:
+            result.likes = args['likes']
+
+        db.session.commit()
+        return result
