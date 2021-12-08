@@ -9,15 +9,18 @@ resource_fields = {'title': fields.String, 'likes': fields.Integer}
 
 
 class Video(Resource):
+    def __init__(self):
+        print('init')
+
     def get(self, id):
         try:
-            return videos[id]
+            return videos[id], 200
         except:
             abort(404, message=f'video {id} is not found')
 
     @marshal_with(resource_fields)
     def post(self, id):
-        return videos
+        return videos, 201
 
     def put(self, id):
         args = video_put_args.parse_args()

@@ -8,9 +8,9 @@ app = Flask(__name__)
 api = Api(app)
 
 
-api.add_resource(Video, '/video/<int:id>')
-api.add_resource(Book, '/book')
+api.add_resource(Video, '/video/<int:id>', endpoint='video')
+api.add_resource(Book, '/book', endpoint='book')
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
